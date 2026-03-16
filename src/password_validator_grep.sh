@@ -18,27 +18,27 @@ while IFS= read -r password
 do
     razones=""
 
-    # Ignorar líneas vacías
+    # limpiar datos
     if [ -z "$password" ]; then
         continue
     fi
 
-    # 1. Solo letras y números
+    # 1. Condición: solo letras y números
     if ! echo "$password" | grep -q '^[A-Za-z0-9]\+$'; then
         razones+="tiene caracteres inválidos; "
     fi
 
-    # 2. Longitud >= 8
+    # 2. Condición: Longitud >= 8
     if ! echo "$password" | grep -q '^.\{8,\}$'; then
         razones+="longitud insuficiente; "
     fi
 
-    # 3. Al menos una mayúscula
+    # 3. Condición:Al menos una mayúscula
     if ! echo "$password" | grep -q '[A-Z]'; then
         razones+="no tiene mayúscula; "
     fi
 
-    # 4. Al menos un dígito
+    # 4. Condición:Al menos un dígito
     if ! echo "$password" | grep -q '[0-9]'; then
         razones+="no tiene dígito; "
     fi
