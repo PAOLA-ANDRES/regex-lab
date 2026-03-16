@@ -26,20 +26,20 @@ grep -E "^\[$LEVEL\] [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} .+" "
 
 echo "Líneas válidas guardadas en $OUTPUT_FILE"
 
-# Total de líneas no vacías
+# Número de líneas no vacías
 TOTAL_NO_VACIAS=$(grep -cve '^[[:space:]]*$' "$INPUT_FILE")
 
-# Total de líneas válidas (cualquier nivel)
+# Número de líneas válidas sin importar el nivel
 TOTAL_VALIDAS=$(grep -Ec '^\[(INFO|WARN|ERROR|DEBUG)\] [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} .+' "$INPUT_FILE")
 
-# Total de líneas sospechosas para el nivel especificado
+# Número de líneas sospechosas para el nivel especificado
 TOTAL_SOSPECHOSAS=$(grep "$LEVEL" "$INPUT_FILE" | grep -Ev '^\['"$LEVEL"'\] [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} .+' | wc -l)
 
 echo "Total líneas no vacías: $TOTAL_NO_VACIAS"
 echo "Total líneas válidas: $TOTAL_VALIDAS"
 echo "Total líneas sospechosas ($LEVEL): $TOTAL_SOSPECHOSAS"
 
-# Total válidas para el nivel especificado
+# Número de válidas para el nivel especificado
 TOTAL_VALIDAS_NIVEL=$(grep -Ec "^\[$LEVEL\] [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} .+" "$INPUT_FILE")
 
 JSON_FILE="$OUTPUT_DIR/reporte_log.json"
