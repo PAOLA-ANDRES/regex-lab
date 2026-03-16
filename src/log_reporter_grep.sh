@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Verificar que se haya pasado un argumento
+# Verificar que se haya pasado la información
 if [ -z "$1" ]; then
     echo "Uso: ./src/log_reporter_grep.sh INFO|WARN|ERROR|DEBUG"
     exit 1
@@ -8,7 +8,7 @@ fi
 
 LEVEL="$1"
 
-# Validamos el  nivel
+# Se verifica que el nivel de log sea permitido antes de seguir
 if [[ ! "$LEVEL" =~ ^(INFO|WARN|ERROR|DEBUG)$ ]]; then
     echo "Nivel inválido. Use INFO, WARN, ERROR o DEBUG."
     exit 1
@@ -18,10 +18,10 @@ INPUT_FILE="data/log_muestra_app.log"
 OUTPUT_DIR="out"
 OUTPUT_FILE="$OUTPUT_DIR/${LEVEL,,}_validos.txt"
 
-# Crear carpeta out si no existe
+# Asegura la existencia de la carpeta out
 mkdir -p "$OUTPUT_DIR"
 
-# Extraer líneas válidas con el nivel especificado
+# Busca el patrón fecha y nivel
 grep -E "^\[$LEVEL\] [0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} .+" "$INPUT_FILE" > "$OUTPUT_FILE"
 
 echo "Líneas válidas guardadas en $OUTPUT_FILE"
